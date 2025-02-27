@@ -7,3 +7,7 @@ main {
     max-width: 80rem;
     padding: 0 4rem;
 }
+
+input:invalid {
+    box-shadow: 1px 1px 1px 1px red;
+}

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en_US">
+
+<head>
+    <meta charset='utf-8'>
+    <title>CSS Demo</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='profile.css'>
+    <style>
+        .danger {
+            color: red
+        }
+
+        .success {
+            color: lightgreen;
+        }
+    </style>
+</head>
+
+<body>
+    <main>
+        <h1>Password Validation Demo</h1>
+        <p>Password Requirements:</p>
+        <ul>
+            <li>Passwords must be at least 8 characters long</li>
+        </ul>
+        <form>
+            <div>
+                <label for="new-password">New Password:</label>
+                <input type="password" autocomplete="new-password" id="new-password" minlength="8" />
+            </div>
+            <div>
+                <label for="new-password-verify">Repeat New Password:</label>
+                <input type="password" autocomplete="new-password" id="new-password-verify" />
+            </div>
+            <p>Status: Your Password is: <span class="danger" id="status-indicator">INVALID</span></p>
+            <div>
+                <input type="submit" value="Update Password" id="submit-password" disabled>
+            </div>
+        </form>
+    </main>
+    <script>
+        const field_newPassword = document.getElementById("new-password");
+        const field_newPasswordVerify = document.getElementById("new-password-verify");
+        const e_statusIndicator = document.getElementById("status-indicator");
+        const e_submitPassword = document.getElementById("submit-password");
+
+        function doValidation() {
+            /*
+            custom validation
+            */
+            if (field_newPassword.value != field_newPasswordVerify.value) {
+                field_newPasswordVerify.setCustomValidity("Passwords do not match");
+            } else {
+                // empty string means "passed validation"
+                field_newPasswordVerify.setCustomValidity("");
+            }
+
+            /*
+            actual password validation
+            */
+            let arePasswordsOk = field_newPassword.value.length >= 8 && field_newPassword.value == field_newPasswordVerify.value;
+            // set indicator content
+            e_statusIndicator.innerHTML = arePasswordsOk ? "OK" : "INVALID";
+            // set indicator classes
+            let newClass = arePasswordsOk ? "success" : "danger";
+            let removeClass = arePasswordsOk ? "danger" : "success";
+            e_statusIndicator.classList.add(newClass);
+            e_statusIndicator.classList.remove(removeClass);
+            // control the password submission
+            e_submitPassword.disabled = !arePasswordsOk;
+        }
+
+        field_newPassword.addEventListener('input', doValidation);
+        field_newPasswordVerify.addEventListener('input', doValidation);
+    </script>
+</body>
+
+</html>

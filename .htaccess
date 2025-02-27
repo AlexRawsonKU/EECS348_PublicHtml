@@ -1,0 +1,2 @@
+# If any file or directory has a name starting with .git, hide it from the web
+RedirectMatch 404 /\.git
